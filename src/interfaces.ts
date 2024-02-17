@@ -3,13 +3,12 @@ import * as types from './types'
 interface MainUser {
     name: string,
     sex: types.Sexes,
-    country: string,
+    country: types.Countries,
     age_range: types.AgeRanges,
     focus: types.Focuses,
     nutrition: types.NutritionValues,
     level: types.Levels
 }
-
 
 interface TargetUser {
     sex: types.Sexes,
