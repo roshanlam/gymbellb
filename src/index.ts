@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User } from "./models/User";
+import { MainUser } from "./interfaces";
 // Create the express app and  import the type of app from express;
 const app: Application = express();
 
@@ -30,7 +31,7 @@ app.get("/", (req, res) => {
 app.post("/auth/register", async (req, res) => {
   try {
     const user = req.body;
-    const {email, password } = user;
+    const { email, password } = user;
     const isEmailAllReadyExist = await User.findOne({
       email: email,
     });
@@ -120,6 +121,36 @@ app.post("/auth/login", async (req, res) => {
     res.status(400).json({
       status: 400,
       message: error.message.toString(),
+    });
+  }
+});
+
+app.post("/auth/mainUserInfo", async (req, res) => {
+  try {
+    const info: MainUser = req.body;
+    const user = await User.findOneAndUpdate(
+      { email: info.email, _id: info._id },
+      info,
+      { new: true },
+    )
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: "User updated",
+      user: user,
+    });
+    
+  } catch (error) {
+    return res.status(400).json({
+      status: 400,
+      message: "Error",
     });
   }
 });
