@@ -6,6 +6,7 @@
   "author": "Roshan <lamichhaner40@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "expo-location": "^16.5.3",
     "express": "^4.18.2",
     "mongodb": "^6.3.0",
     "nodemon": "^3.0.3"
