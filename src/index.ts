@@ -1,10 +1,12 @@
 // src/index.ts
 import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-
+import cors from 'cors';
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 // MongoDB connection DBURL
 const DB_URL = process.env.DBURL || 'mongodb+srv://gymbell:ItsSafeAndLit24@cluster0.yg4q8go.mongodb.net/?retryWrites=true&w=majority';
@@ -15,11 +17,11 @@ client.connect().then(() => {
     }
 ).catch((error) => {    
     console.log('Error connecting to MongoDB', error);
-    }   
+    }
 );
 
 app.get('/', (req, res) => {
-  res.send('Hello, TypeScript with Express and MongoDB!');
+  res.send('Hello World! This is the Gymbell API.');
 });
 
 app.listen(port, () => {

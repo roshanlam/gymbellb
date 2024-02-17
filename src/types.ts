@@ -1,4 +1,4 @@
-import { countries } from "../utils/countries";
+import { countries } from "./utils/countries";
 
 export type Sexes = 'male' | 'female' | 'other';
 export type AgeRanges = '<18' | '18-30' | '30-40' | '40+';
