@@ -1,4 +1,4 @@
-import * as types from './types.js'
+import * as types from './types'
 
 interface MainUser {
     name: string,
@@ -10,9 +10,10 @@ interface MainUser {
     level: types.Levels
 }
 
+
 interface TargetUser {
     sex: types.Sexes,
-    country: string,
+    country: Set<types.Countries>,
     age_range: Set<types.AgeRanges>,
     focus: Set<types.Focuses>,
     nutrition: Set<types.NutritionValues>,
