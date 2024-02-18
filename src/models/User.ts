@@ -17,10 +17,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  country: {
+  /*country: {
     type: String,
     required: false,
-  },
+  },*/
   age_range: {
     type: String,
     required: false,
