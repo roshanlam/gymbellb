@@ -20,7 +20,7 @@ app.use(
     extended: true,
   })
 );
-// Declare The PORT Like This
+
 const PORT: number = 8000;
 
 app.get("/", (req, res) => {
@@ -114,6 +114,32 @@ app.post("/auth/login", async (req, res) => {
       success: true,
       message: "login success",
       token: token,
+    });
+  } catch (error: any) {
+    // Send the error message to the client
+    res.status(400).json({
+      status: 400,
+      message: error.message.toString(),
+    });
+  }
+});
+
+app.get("/auth/user", async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    if (!token) {
+      res.status(401).json({
+        status: 401,
+        message: "Unauthorized",
+      });
+      return;
+    }
+    const user = jwt.verify(token, "YOUR_SECRET");
+    res.status(200).json({
+      status: 200,
+      success: true,
+      message: "User found",
+      user: user,
     });
   } catch (error: any) {
     // Send the error message to the client
