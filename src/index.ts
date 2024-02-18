@@ -207,7 +207,7 @@ function calculateCompatibility(user1: any, user2: any) {
 }
 app.get("/user/getBuddies", async (req, res) => {
   try{
-    const MainUser = req.body;
+    const MainUser = req.headers;
     const UserInfo = await User.findOne({
       email: MainUser.email,
     });
