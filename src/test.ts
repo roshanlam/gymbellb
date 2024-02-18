@@ -13,3 +13,19 @@ axios.get('http://localhost:8000/auth/user', {
 .catch((error) => {
   console.error(error.response.data);
 });
+
+
+/*
+{
+    "_id": "65d183091542a64bad76c244",
+    "email": "roshanll@umass.edu",
+    "name": "Roshan",
+    "sex": "male",
+    "country": "USA",
+    "age_range": "18-30",
+    "focus": "casual",
+    "nutrition": "idk/idc",
+    "level": "newbee"
+}
+
+*/

@@ -14,6 +14,7 @@ export interface MainUser {
 }
 
 export interface TargetUser {
+    preferedBy: MainUser,
     sex: types.Sexes,
     country: Set<types.Countries>,
     age_range: Set<types.AgeRanges>,
