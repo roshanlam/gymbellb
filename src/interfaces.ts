@@ -10,7 +10,6 @@ export interface MainUser {
     level: types.Levels
 }
 
-
 export interface TargetUser {
     sex: types.Sexes,
     country: Set<types.Countries>,
