@@ -1,5 +1,5 @@
 // models/MainUser.ts
-import mongoose from 'mongoose';
+/*import mongoose from 'mongoose';
 import { Sexes, AgeRanges, Focuses, NutritionValues, Levels } from '../types'; 
 import { MainUser } from '../interfaces';
 
@@ -18,3 +18,26 @@ const mainUserSchema = new mongoose.Schema<MainUser>({
 const MainUserModel = mongoose.model<MainUser>('User', mainUserSchema);
 
 export default MainUserModel;
+*/
+
+import mongoose, { Document } from 'mongoose';
+import bcrypt from 'bcrypt';
+
+interface IUser extends Document {
+  email: string;
+  password: string;
+}
+
+const userSchema = new mongoose.Schema<IUser>({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
+
+userSchema.pre<IUser>('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+const User = mongoose.model<IUser>('User', userSchema);
+export default User;

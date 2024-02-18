@@ -1,43 +1,36 @@
-// routes/authRoutes.ts
-import express from 'express';
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import MainUserModel from './models/User';
+import bcrypt from 'bcrypt';
+import { Router } from 'express';
+import User from './models/User';
 
-dotenv.config();
-const router = express.Router();
+const router = Router();
 
 router.post('/register', async (req, res) => {
-    const { email, name, sex, country, age_range, focus, nutrition, level } = req.body;
-    try {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        const newUser = new MainUserModel({ email, name, sex, country, age_range, focus, nutrition, level, password: hashedPassword});
-        await newUser.save();
-        res.status(201).send({ message: 'User registered successfully' });
-    } catch (error) {
-        res.status(500).send(error);
-    }
+  try {
+    const { email, password } = req.body;
+    const user = new User({ email, password });
+    await user.save();
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    const message = (error as Error).message;
+    res.status(500).json({ error: message });
+  }
 });
 
-// Login endpoint
 router.post('/login', async (req, res) => {
-    const { name, password } = req.body;
     try {
-        const user = await MainUserModel.findOne({ name });
-        if (!user) {
-            return res.status(404).send({ message: 'User not found' });
-        }
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).send({ message: 'Invalid credentials' });
-        }
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: '24h' });
-        res.status(200).send({ token });
+      const { email, password } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) return res.status(404).json({ message: 'User not found' });
+  
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+      res.json({ token });
     } catch (error) {
-        res.status(500).send(error);
+        const message = (error as Error).message;
+        res.status(500).json({ error: message })
     }
-});
+  });
 
 export default router;
