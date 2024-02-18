@@ -122,7 +122,7 @@ app.post("/UserInfo", async (req, res) => {
     const info: MainUser = req.body;
     console.log(info);
     const user = await User.findOneAndUpdate(
-      {_id: info._id },
+      {email: info.email },
       info,
       { new: true },
     )
