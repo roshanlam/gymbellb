@@ -1,6 +1,6 @@
 import * as types from './types'
 
-interface MainUser {
+export interface MainUser {
     name: string,
     sex: types.Sexes,
     country: string,
@@ -8,10 +8,12 @@ interface MainUser {
     focus: types.Focuses,
     nutrition: types.NutritionValues,
     level: types.Levels
+    email: string,
+    password: string
 }
 
 
-interface TargetUser {
+export interface TargetUser {
     sex: types.Sexes,
     country: Set<types.Countries>,
     age_range: Set<types.AgeRanges>,
