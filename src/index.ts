@@ -106,6 +106,8 @@ app.post("/auth/login", async (req, res) => {
       success: true,
       message: "login success",
       token: token,
+      userEmail: isUserExist?.email,
+      userId: isUserExist?._id,
     });
   } catch (error: any) {
     res.status(400).json({
@@ -120,7 +122,7 @@ app.post("/UserInfo", async (req, res) => {
     const info: MainUser = req.body;
     console.log(info);
     const user = await User.findOneAndUpdate(
-      {_id: info._id },
+      {email: info.email },
       info,
       { new: true },
     )
@@ -267,7 +269,6 @@ app.get("/user/getUserInfo", async (req, res) => {
 });
 
 const DATABASE_URL = "mongodb+srv://gymbell:ItsSafeAndLit24@cluster0.yg4q8go.mongodb.net/?retryWrites=true&w=majority";
-// Listen the server
 app.listen(PORT, async () => {
   console.log(`🗄️  Server Fire on http:localhost//${PORT}`);
   try {
