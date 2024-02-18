@@ -156,6 +156,24 @@ app.get("/auth/user", async (req, res) => {
 });
 
 
+app.post('/target-user', async (req, res) => {
+  try{
+    const targetUser = req.body;
+    const buddyUser = await User.findOneAndUpdate(targetUser.preferedBy, targetUser);
+    res.status(200).json({
+      status: 200,
+      message: "Target User Successfully Added",
+      user: buddyUser,
+    });
+
+  } catch(error: any){
+    res.status(400).json({
+      status: 400,
+      message: error.message.toString(),
+    });
+  }
+});
+
 const DATABASE_URL = "mongodb+srv://gymbell:ItsSafeAndLit24@cluster0.yg4q8go.mongodb.net/?retryWrites=true&w=majority";
 // Listen the server
 app.listen(PORT, async () => {
