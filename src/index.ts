@@ -126,29 +126,37 @@ app.post("/auth/login", async (req, res) => {
 
 app.get("/auth/user", async (req, res) => {
   try {
-    const token = req.headers.authorization;
-    if (!token) {
-      res.status(401).json({
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({
         status: 401,
         message: "Unauthorized",
       });
-      return;
+    }
+    // Split the token from the Bearer prefix
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({
+        status: 401,
+        message: "Unauthorized - Token missing",
+      });
     }
     const user = jwt.verify(token, "YOUR_SECRET");
-    res.status(200).json({
+    // Consider verifying the existence of the user in the database here
+    return res.status(200).json({
       status: 200,
       success: true,
       message: "User found",
       user: user,
     });
-  } catch (error: any) {
-    // Send the error message to the client
-    res.status(400).json({
+  } catch (error) {
+    return res.status(400).json({
       status: 400,
-      message: error.message.toString(),
+      message: "Invalid token",
     });
   }
 });
+
 
 const DATABASE_URL = "mongodb+srv://gymbell:ItsSafeAndLit24@cluster0.yg4q8go.mongodb.net/?retryWrites=true&w=majority";
 // Listen the server
