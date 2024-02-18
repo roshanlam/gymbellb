@@ -1,6 +1,6 @@
 import * as types from './types'
 
-interface MainUser {
+export interface MainUser {
     name: string,
     sex: types.Sexes,
     country: types.Countries,
@@ -11,7 +11,7 @@ interface MainUser {
     location?: types.LocationData
 }
 
-interface TargetUser {
+export interface TargetUser {
     sex: types.Sexes,
     country: Set<types.Countries>,
     age_range: Set<types.AgeRanges>,
