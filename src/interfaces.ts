@@ -8,8 +8,6 @@ export interface MainUser {
     focus: types.Focuses,
     nutrition: types.NutritionValues,
     level: types.Levels
-    email: string,
-    password: string
 }
 
 
