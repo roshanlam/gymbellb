@@ -10,11 +10,11 @@ export interface MainUser {
     focus: types.Focuses,
     nutrition: types.NutritionValues,
     level: types.Levels,
-    location?: types.LocationData
+    location?: types.LocationData,
+    targetUser: TargetUser
 }
 
 export interface TargetUser {
-    preferedBy: MainUser,
     sex: types.Sexes,
     country: Set<types.Countries>,
     age_range: Set<types.AgeRanges>,

@@ -40,6 +40,10 @@ const UserSchema = new mongoose.Schema({
   location: {
     type: Object,
     required: false,
+  },
+  targetUser:{
+    type: Object,
+    required: false,
   }
 });
 

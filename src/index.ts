@@ -122,7 +122,7 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
-app.post("/auth/mainUserInfo", async (req, res) => {
+app.post("/UserInfo", async (req, res) => {
   try {
     const info: MainUser = req.body;
     console.log(info);
@@ -146,12 +146,7 @@ app.post("/auth/mainUserInfo", async (req, res) => {
       user: user,
     });
     
-  } /*catch (error) {
-    return res.status(400).json({
-      status: 400,
-      message: "Error",
-    });
-  }*/
+  }
   catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({
@@ -201,16 +196,6 @@ app.get("/auth/user", async (req, res) => {
   }
 });
 
-app.post('/target-user', async (req, res) => {
-  try{
-    
-  } catch(error: any){
-    res.status(400).json({
-      status: 400,
-      message: error.message.toString(),
-    });
-  }
-});
 
 const DATABASE_URL = "mongodb+srv://gymbell:ItsSafeAndLit24@cluster0.yg4q8go.mongodb.net/?retryWrites=true&w=majority";
 // Listen the server
