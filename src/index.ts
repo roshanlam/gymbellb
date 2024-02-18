@@ -209,7 +209,7 @@ app.get("/user/getBuddies", async (req, res) => {
     const UserInfo = await User.findOne({
       email: MainUser.email,
     });
-    const targetUser = UserInfo?.targetUser;
+    const targetUser = JSON.parse(UserInfo?.targetUser);
     const matchingUsers = await User.find({
       $or: [
         ...decomposedObjects(targetUser)
@@ -243,7 +243,7 @@ app.get("/user/getBuddies", async (req, res) => {
 
 app.get("/user/getUserInfo", async (req, res) => {
   try {
-    const MainUser = req.body;
+    const MainUser = req.headers;
     const UserInfo
     = await User.findOne({ 
       email: MainUser.email,
