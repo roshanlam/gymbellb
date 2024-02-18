@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User } from "./models/User";
-import { MainUser } from "./interfaces";
+import { MainUser, TargetUser } from "./interfaces";
 // Create the express app and  import the type of app from express;
 const app: Application = express();
 
@@ -128,6 +128,7 @@ app.post("/auth/login", async (req, res) => {
 app.post("/auth/mainUserInfo", async (req, res) => {
   try {
     const info: MainUser = req.body;
+    console.log(info);
     const user = await User.findOneAndUpdate(
       { email: info.email, _id: info._id },
       info,
@@ -186,16 +187,9 @@ app.get("/auth/user", async (req, res) => {
   }
 });
 
-
 app.post('/target-user', async (req, res) => {
   try{
-    const targetUser = req.body;
-    const buddyUser = await User.findOneAndUpdate(targetUser.preferedBy, targetUser);
-    res.status(200).json({
-      status: 200,
-      message: "Target User Successfully Added",
-      user: buddyUser,
-    });
+    
 
   } catch(error: any){
     res.status(400).json({
