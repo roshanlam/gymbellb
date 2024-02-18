@@ -48,8 +48,6 @@ app.post("/auth/register", async (req, res) => {
       password: hashedPassword,
     });
 
-
-    // Send the newUser as  response;
     res.status(200).json({
       status: 201,
       success: true,
@@ -57,10 +55,7 @@ app.post("/auth/register", async (req, res) => {
       user: newUser,
     });
   } catch (error: any) {
-    // console the error to debug
     console.log(error);
-
-    // Send the error message to the client
     res.status(400).json({
       status: 400,
       message: error.message.toString(),
@@ -106,7 +101,6 @@ app.post("/auth/login", async (req, res) => {
       }
     );
 
-    // send the response
     res.status(200).json({
       status: 200,
       success: true,
@@ -114,7 +108,6 @@ app.post("/auth/login", async (req, res) => {
       token: token,
     });
   } catch (error: any) {
-    // Send the error message to the client
     res.status(400).json({
       status: 400,
       message: error.message.toString(),
@@ -154,15 +147,12 @@ app.post("/UserInfo", async (req, res) => {
         message: error.message,
       });
     } else {
-      // Handle cases where the error might not be an instance of Error
       return res.status(400).json({
         status: 400,
         message: "An unknown error occurred",
       });
     }
   }
-  
-  
 });
 
 app.get("/auth/user", async (req, res) => {
@@ -195,10 +185,6 @@ app.get("/auth/user", async (req, res) => {
     });
   }
 });
-
-interface UserMatchingInfo {
-  email: string;
-}
 
 const decomposedObjects = (object: any) =>  Object.entries(object).map(([key, value]) => {
   return { [key]: value };
@@ -249,6 +235,31 @@ app.get("/user/getBuddies", async (req, res) => {
       success: true,
       message: "User found",
       matchingUsers: usersWithCompatibility,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/user/getUserInfo", async (req, res) => {
+  try {
+    const MainUser = req.body;
+    const UserInfo
+    = await User.findOne({ 
+      email: MainUser.email,
+    });
+    if (!UserInfo) {
+      res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+      return;
+    }
+    return res.status(200).json({ 
+      status: 200,
+      success: true,
+      message: "User found",
+      user: UserInfo,
     });
   } catch (error) {
     console.log(error);
