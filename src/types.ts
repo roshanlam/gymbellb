@@ -6,3 +6,16 @@ export type Focuses = 'casual' | 'bodybuilding' | 'powerlifting' | 'cardio';
 export type NutritionValues = 'idk/idc' | 'stable' | 'bulking' | 'cutting';
 export type Levels = 'newbee' | 'beginner' | 'intermediate' | 'advanced';
 export type Countries = typeof countries[number];
+
+export type LocationData = {
+    coords: {
+      speed?: number;
+      longitude: number;
+      latitude: number;
+      accuracy?: number;
+      heading?: number;
+      altitude?: number;
+      altitudeAccuracy?: number;
+    };
+    timestamp?: number;
+  };

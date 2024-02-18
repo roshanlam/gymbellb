@@ -7,7 +7,8 @@ interface MainUser {
     age_range: types.AgeRanges,
     focus: types.Focuses,
     nutrition: types.NutritionValues,
-    level: types.Levels
+    level: types.Levels,
+    location?: types.LocationData
 }
 
 interface TargetUser {
