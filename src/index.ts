@@ -7,14 +7,11 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User } from "./models/User";
 import { MainUser, TargetUser } from "./interfaces";
-// Create the express app and  import the type of app from express;
-const app: Application = express();
 
-// Cors
+const app: Application = express();
 app.use(cors());
-//configure env;
 dotenv.config();
-// Parser
+
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -25,7 +22,7 @@ app.use(
 const PORT: number = 8000;
 
 app.get("/", (req, res) => {
-  res.send("<h1>Welcome To JWT Authentication </h1>");
+  res.send("<h1>Welcome To GymBell's API </h1>");
 });
 
 app.post("/auth/register", async (req, res) => {
@@ -130,11 +127,12 @@ app.post("/auth/mainUserInfo", async (req, res) => {
     const info: MainUser = req.body;
     console.log(info);
     const user = await User.findOneAndUpdate(
-      { email: info.email, _id: info._id },
+      {_id: info._id },
       info,
       { new: true },
     )
     if (!user) {
+      console.log(user);
       return res.status(404).json({
         status: 404,
         message: "User not found",
@@ -148,12 +146,28 @@ app.post("/auth/mainUserInfo", async (req, res) => {
       user: user,
     });
     
-  } catch (error) {
+  } /*catch (error) {
     return res.status(400).json({
       status: 400,
       message: "Error",
     });
+  }*/
+  catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({
+        status: 400,
+        message: error.message,
+      });
+    } else {
+      // Handle cases where the error might not be an instance of Error
+      return res.status(400).json({
+        status: 400,
+        message: "An unknown error occurred",
+      });
+    }
   }
+  
+  
 });
 
 app.get("/auth/user", async (req, res) => {
@@ -190,7 +204,6 @@ app.get("/auth/user", async (req, res) => {
 app.post('/target-user', async (req, res) => {
   try{
     
-
   } catch(error: any){
     res.status(400).json({
       status: 400,

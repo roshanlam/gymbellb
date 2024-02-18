@@ -17,8 +17,8 @@ axios.get('http://localhost:8000/auth/user', {
 
 /*
 {
-    "_id": "65d183091542a64bad76c244",
-    "email": "roshanll@umass.edu",
+    "_id": "65d19a201e1adbba0e3357ea",
+    "email": "roshan@umass.edu",
     "name": "Roshan",
     "sex": "male",
     "country": "USA",

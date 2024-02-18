@@ -13,10 +13,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  _id: {
-    type: String,
-    required: false,
-  },
   sex: {
     type: String,
     required: false,
