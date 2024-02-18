@@ -133,7 +133,6 @@ app.get("/auth/user", async (req, res) => {
         message: "Unauthorized",
       });
     }
-    // Split the token from the Bearer prefix
     const token = authHeader.split(' ')[1];
     if (!token) {
       return res.status(401).json({
@@ -142,7 +141,6 @@ app.get("/auth/user", async (req, res) => {
       });
     }
     const user = jwt.verify(token, "YOUR_SECRET");
-    // Consider verifying the existence of the user in the database here
     return res.status(200).json({
       status: 200,
       success: true,
