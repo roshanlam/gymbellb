@@ -88,8 +88,12 @@ app.post("/auth/login", async (req, res) => {
       return;
     }
 
-    const isPasswordMatched =
-      isUserExist?.password === password;
+    //const isPasswordMatched =
+     // isUserExist?.password === password;
+    const isPasswordMatched = await bcrypt.compare(
+      password,
+      isUserExist?.password as string
+    );
 
     if (!isPasswordMatched) {
       res.status(400).json({
