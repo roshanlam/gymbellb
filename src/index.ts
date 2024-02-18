@@ -205,6 +205,18 @@ const decomposedObjects = (object: any) =>  Object.entries(object).map(([key, va
 });
 
 
+function calculateCompatibility(user1: any, user2: any) {
+  const fields = Object.keys(user1);
+  let matches = 0;
+
+  for (const field of fields) {
+    if (user1[field] === user2[field]) {
+      matches++;
+    }
+  }
+
+  return (matches / fields.length) * 100;
+}
 app.get("/user/getBuddies", async (req, res) => {
   try{
     const MainUser = req.body;
@@ -226,11 +238,17 @@ app.get("/user/getBuddies", async (req, res) => {
       return;
     }
 
+    const usersWithCompatibility = matchingUsers.map((user: any) => ({
+      email: user._doc.email,
+      _id: user._doc._id,
+      compatibility: calculateCompatibility(targetUser, user),
+    }));
+
     res.status(200).json({
       status: 200,
       success: true,
       message: "User found",
-      user: matchingUsers,
+      matchingUsers: usersWithCompatibility,
     });
   } catch (error) {
     console.log(error);
