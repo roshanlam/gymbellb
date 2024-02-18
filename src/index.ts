@@ -215,7 +215,8 @@ app.get("/user/getBuddies", async (req, res) => {
     const matchingUsers = await User.find({
       $or: [
         ...decomposedObjects(targetUser)
-      ]
+      ],
+      email: { $ne: MainUser.email }
     })
     if (!UserInfo) {
       res.status(404).json({
@@ -225,6 +226,12 @@ app.get("/user/getBuddies", async (req, res) => {
       return;
     }
 
+    res.status(200).json({
+      status: 200,
+      success: true,
+      message: "User found",
+      user: matchingUsers,
+    });
   } catch (error) {
     console.log(error);
   }
