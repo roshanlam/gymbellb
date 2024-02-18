@@ -5,7 +5,7 @@ export interface MainUser {
     email: string,
     name: string,
     sex: types.Sexes,
-    //country: types.Countries,
+    country: types.Countries,
     age_range: types.AgeRanges,
     focus: types.Focuses,
     nutrition: types.NutritionValues,
@@ -16,7 +16,7 @@ export interface MainUser {
 
 export interface TargetUser {
     sex: types.Sexes,
-    //country: Set<types.Countries>,
+    country: Set<types.Countries>,
     age_range: Set<types.AgeRanges>,
     focus: Set<types.Focuses>,
     nutrition: Set<types.NutritionValues>,
