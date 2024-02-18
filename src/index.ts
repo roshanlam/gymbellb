@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 app.post("/auth/register", async (req, res) => {
   try {
     const user = req.body;
-    const { name, email, password } = user;
+    const {email, password } = user;
     const isEmailAllReadyExist = await User.findOne({
       email: email,
     });
@@ -46,7 +46,6 @@ app.post("/auth/register", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
-      name,
       email,
       password: hashedPassword,
     });
@@ -88,8 +87,6 @@ app.post("/auth/login", async (req, res) => {
       return;
     }
 
-    //const isPasswordMatched =
-     // isUserExist?.password === password;
     const isPasswordMatched = await bcrypt.compare(
       password,
       isUserExist?.password as string
@@ -131,8 +128,6 @@ const DATABASE_URL = "mongodb+srv://gymbell:ItsSafeAndLit24@cluster0.yg4q8go.mon
 // Listen the server
 app.listen(PORT, async () => {
   console.log(`🗄️  Server Fire on http:localhost//${PORT}`);
-
-  // Connect To The Database
   try {
     await mongoose.connect(
       DATABASE_URL as string
