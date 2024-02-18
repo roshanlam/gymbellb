@@ -196,6 +196,39 @@ app.get("/auth/user", async (req, res) => {
   }
 });
 
+interface UserMatchingInfo {
+  email: string;
+}
+
+const decomposedObjects = (object: any) =>  Object.entries(object).map(([key, value]) => {
+  return { [key]: value };
+});
+
+
+app.get("/user/getBuddies", async (req, res) => {
+  try{
+    const MainUser = req.body;
+    const UserInfo = await User.findOne({
+      email: MainUser.email,
+    });
+    const targetUser = UserInfo?.targetUser;
+    const matchingUsers = await User.find({
+      $or: [
+        ...decomposedObjects(targetUser)
+      ]
+    })
+    if (!UserInfo) {
+      res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+      return;
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const DATABASE_URL = "mongodb+srv://gymbell:ItsSafeAndLit24@cluster0.yg4q8go.mongodb.net/?retryWrites=true&w=majority";
 // Listen the server
